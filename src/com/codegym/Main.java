@@ -39,14 +39,13 @@ public class Main {
         switch (choice) {
             case 1: {
                 // Gọi hàm thêm sản phẩm
-                System.out.println("Nhập tên sản phẩm mới: ");
-                String newName = scanner.next();
-                System.out.println("Nhập giá sản phẩm mới");
-                int newPrice = scanner.nextInt();
-                System.out.println("Nhập mô tả sản phẩm mới: ");
-                String newDescription = scanner.next();
+//                System.out.println("Nhập tên sản phẩm mới: ");
+//                String newName = scanner.next();
+//                System.out.println("Nhập giá sản phẩm mới");
+//                int newPrice = scanner.nextInt();
+//                System.out.println("Nhập mô tả sản phẩm mới: ");
                 ProductManagement[] newProducts = new ProductManagement[products.length + 1];
-                ProductManagement newProduct = new ProductManagement(6, newName, newPrice, newDescription);
+                ProductManagement newProduct = new ProductManagement(6, "Đòng Đòng", 200000, "Rượu quê nấu từ gạo nếp");
                 System.out.println("\nMảng sau khi thêm sản phẩm: ");
                 newProducts = addProduct(products, 5, newProduct);
                 for (int i = 0; i < newProducts.length; i++) {
