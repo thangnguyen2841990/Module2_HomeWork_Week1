@@ -39,13 +39,15 @@ public class Main {
         switch (choice) {
             case 1: {
                 // Gọi hàm thêm sản phẩm
-//                System.out.println("Nhập tên sản phẩm mới: ");
-//                String newName = scanner.next();
-//                System.out.println("Nhập giá sản phẩm mới");
-//                int newPrice = scanner.nextInt();
-//                System.out.println("Nhập mô tả sản phẩm mới: ");
+                Scanner scanner2 = new Scanner(System.in);
+                System.out.println("Nhập tên sản phẩm mới: ");
+                String newName = scanner2.nextLine();
+                System.out.println("Nhập giá sản phẩm mới");
+                int newPrice = scanner.nextInt();
+                System.out.println("Nhập mô tả sản phẩm mới: ");
+                String newDiscription = scanner2.nextLine();
                 ProductManagement[] newProducts = new ProductManagement[products.length + 1];
-                ProductManagement newProduct = new ProductManagement(6, "Đòng Đòng", 200000, "Rượu quê nấu từ gạo nếp");
+                ProductManagement newProduct = new ProductManagement(6, newName, newPrice, newDiscription);
                 System.out.println("\nMảng sau khi thêm sản phẩm: ");
                 newProducts = addProduct(products, 5, newProduct);
                 for (int i = 0; i < newProducts.length; i++) {
@@ -67,10 +69,11 @@ public class Main {
             }
             case 3: {
                 // Tìm kiếm sản phẩm theo tên
+                Scanner scanner1 = new Scanner(System.in);
                 System.out.println("Nhập tên sản phẩm muốn tìm");
-                String name = scanner.next();
-                int index = positionOfProduct(products,name);
-                if (index == -1){
+                String name = scanner1.nextLine();
+                int index = positionOfProduct(products, name);
+                if (index == -1) {
                     System.out.println("Sản phẩm không có trong danh sách");
                 } else {
                     System.out.println(products[index].display());
@@ -99,7 +102,6 @@ public class Main {
                 break;
             }
         }
-
 
     }
 
