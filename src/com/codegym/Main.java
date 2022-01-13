@@ -8,153 +8,178 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
+    public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        ProductManagement[] products = new ProductManagement[5];
-        products[0] = new ProductManagement(1, "Vinamilk", 10000, "Sữa tươi từ bò 100%");
-        products[1] = new ProductManagement(2, "WakeUp 247", 8000, "Cà phê");
-        products[2] = new ProductManagement(3, "Bò húc", 12000, "Nước tăng lực");
-        products[3] = new ProductManagement(4, "Lavie", 5000, "Nước khoáng thiên nhiên");
-        products[4] = new ProductManagement(5, "Heniken", 20000, "Bia sản xuất 100% từ lúa mạch");
-        // Hiển thị sản phẩm.
-        System.out.println("Các sản phẩm gồm: ");
-        for (int i = 0; i < products.length; i++) {
-            System.out.println(products[i].display());
-        }
+        Product[] products = new Product[5];
+        products[0] = new Product(1, "Sting đỏ", 8000, "Nước tăng lục vị dâu");
+        products[1] = new Product(2, "Sting vàng", 8000, "Nước tăng lục vị cam");
+        products[2] = new Product(3, "Rồng đỏ", 10000, "Nước tăng lục vị rồng đỏ");
+        products[3] = new Product(4, "WakeUp 247", 13000, "Nước tăng lục vị cà phê");
+        products[4] = new Product(5, "Number 1", 9000, "Nước tăng lục vị dứa");
+        menu();
+
         int choice;
-        System.out.println("Menu: ");
-        System.out.println("1. Thêm sản phẩm. ");
-        System.out.println("2. Xóa sản phẩm. ");
-        System.out.println("3. Tìm sản phẩm theo tên. ");
-        System.out.println("4. Sắp xếp tên sản phẩm theo bảng chữ cái. ");
-        System.out.println("5. Cập nhật giá sản phẩm.");
         do {
-            System.out.print("Nhập lựa chọn của bạn: ");
+            System.out.println("Nhập lựa chọn của bạn: ");
             choice = scanner.nextInt();
-            if (choice > 5) {
-                System.out.println("Menu chỉ từ 1 => 5");
+            if (choice > 6) {
+                System.out.println("Menu chỉ có từ 1 => 6");
             }
-        } while (choice > 5);
-        switch (choice) {
-            case 1: {
-                // Gọi hàm thêm sản phẩm
-                Scanner scanner2 = new Scanner(System.in);
-                System.out.println("Nhập tên sản phẩm mới: ");
-                String newName = scanner2.nextLine();
-                System.out.println("Nhập giá sản phẩm mới");
-                int newPrice = scanner.nextInt();
-                System.out.println("Nhập mô tả sản phẩm mới: ");
-                String newDiscription = scanner2.nextLine();
-                ProductManagement[] newProducts = new ProductManagement[products.length + 1];
-                ProductManagement newProduct = new ProductManagement(6, newName, newPrice, newDiscription);
-                System.out.println("\nMảng sau khi thêm sản phẩm: ");
-                newProducts = addProduct(products, 5, newProduct);
-                for (int i = 0; i < newProducts.length; i++) {
-                    System.out.println(newProducts[i].display());
+            switch (choice) {
+                case 1: {
+                    System.out.println("----Hiển thị danh sách sản phẩm----");
+                    showAllProducts(products);
+                    break;
                 }
-                break;
-            }
-            case 2: {
-                // Gọi hàm xóa sản phẩm
-                System.out.print("Nhập vị trí sản phẩm muốn xóa: ");
-                int index2 = scanner.nextInt();
-                ProductManagement[] newProducts1 = new ProductManagement[4];
-                newProducts1 = deleteProduct(products, index2 - 1);
-                System.out.println("\nMảng sau khi xóa sản phẩm: ");
-                for (int i = 0; i < newProducts1.length; i++) {
-                    System.out.println(newProducts1[i].display());
+                case 2: {
+                    System.out.println("----Thêm sản phẩm mới----");
+                    System.out.println("Nhập vị trí bạn muốn thêm sản phẩm");
+                    int index = scanner.nextInt();
+                    if (index < 0 || index > products.length) {
+                        System.out.println("Vị trí này không xác định");
+                    } else {
+                        Product newProduct = inputNewProduct();
+                        products = addNewProduct(products, index, newProduct);
+                    }
+                    break;
                 }
-                break;
-            }
-            case 3: {
-                // Tìm kiếm sản phẩm theo tên
-                Scanner scanner1 = new Scanner(System.in);
-                System.out.println("Nhập tên sản phẩm muốn tìm");
-                String name = scanner1.nextLine();
-                int index = positionOfProduct(products, name);
-                if (index == -1) {
-                    System.out.println("Sản phẩm không có trong danh sách");
-                } else {
-                    System.out.println(products[index].display());
+                case 3: {
+                    System.out.println("----Xóa sản phẩm----");
+                    System.out.println("Nhập vị trí bạn muốn xóa sản phẩm");
+                    int index = scanner.nextInt();
+                    if (index < 0 || index >= products.length) {
+                        System.out.println("Vị trí này không xác định");
+                    } else {
+                        products = deleteNewProduct(products, index);
+                    }
+                    break;
                 }
-                break;
-            }
-            case 4: {
-                // Gọi hàm sắp xếp tên sản phẩm tử A-Z
-                Arrays.sort(products);
-                System.out.println("Mảng sau khi sắp xếp theo thứ tự A-Z: ");
-                for (int i = 0; i < products.length; i++) {
-                    System.out.println(products[i].display());
+                case 4: {
+                    System.out.println("----Cập nhật sản phẩm----");
+                    System.out.println("Nhập vị trí bạn muốn cập nhật sản phẩm");
+                    int index = scanner.nextInt();
+                    if (index < 0 || index >= products.length) {
+                        System.out.println("Vị trí này không xác định");
+                    } else {
+                        Product newProduct = inputNewProduct();
+                        products[index] = newProduct;
+                    }
+                    break;
                 }
-                break;
-            }
-            case 5: {
-                // Cập nhật giá sản phẩm
-                System.out.println("Nhập vị trí sản phẩm muốn thay đổi giá");
-                int index1 = scanner.nextInt();
-                System.out.println("Nhập giá mới: ");
-                int newPrice = scanner.nextInt();
-                changePrice(products, index1 - 1, newPrice);
-                for (int i = 0; i < products.length; i++) {
-                    System.out.println(products[i].display());
+                case 5: {
+                    System.out.println("----Tìm sản phẩm theo tên----");
+                    System.out.println("Nhập tên sản phẩm muốn tìm: ");
+                    scanner.nextLine();
+                    String name = scanner.nextLine();
+                    int index = findElement(products, name);
+                    if (index == -1) {
+                        System.out.println("Không tìm thấy sản phẩm");
+                    } else {
+                        System.out.println(products[index]);
+                    }
+
+                    break;
                 }
-                break;
+                case 6: {
+                    System.out.println("----Sắp xếp sản phẩm theo thứ tự bảng chữ cái----");
+                    sortElement(products);
+                    break;
+                }
             }
-        }
+
+
+        } while (choice != 0);
+
 
     }
 
-    //Xây dựng hàm thêm 1 sản phẩm vào mảng
-    public static ProductManagement[] addProduct(ProductManagement[] arr, int index, ProductManagement value) {
-        ProductManagement[] newArr = new ProductManagement[arr.length + 1];
-        for (int i = 0; i < newArr.length; i++) {
+    // Hiển thị menu
+    public static void menu() {
+        System.out.println("Menu: ");
+        System.out.println("1. Hiển thị danh sách sản phẩm. ");
+        System.out.println("2. Thêm sản phẩm mới. ");
+        System.out.println("3. Xóa sản phẩm, ");
+        System.out.println("4. Cập nhât sản phẩm ");
+        System.out.println("5. Tìm sản phẩm theo tên. ");
+        System.out.println("6. Sắp xếp sản phẩm theo tên(A-Z) ");
+        System.out.println("0. Thoát");
+    }
+
+    //Hiển thị danh sách sản phẩm
+    public static void showAllProducts(Product[] products) {
+        for (int i = 0; i < products.length; i++) {
+            System.out.println((i + 1) + ". " + products[i]);
+        }
+    }
+
+    // Hàm nhập thông tin sản phẩm mới
+    public static Product inputNewProduct() {
+        System.out.println("Nhập thông tin sản phẩm mới");
+        System.out.println("ID: ");
+        int newID = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Name: ");
+        String newName = scanner.nextLine();
+        System.out.println("Price: ");
+        double newPrice = scanner.nextDouble();
+        scanner.nextLine();
+        System.out.println("Discription: ");
+        String newDiscription = scanner.nextLine();
+        return new Product(newID, newName, newPrice, newDiscription);
+    }
+
+    //Hàm thêm sản phẩm
+    public static Product[] addNewProduct(Product[] products, int index, Product value) {
+        Product[] newProducts = new Product[products.length + 1];
+        for (int i = 0; i < newProducts.length; i++) {
             if (i < index) {
-                newArr[i] = arr[i];
+                newProducts[i] = products[i];
             } else if (i == index) {
-                newArr[i] = value;
+                newProducts[i] = value;
             } else {
-                newArr[i] = arr[i - 1];
+                newProducts[i] = products[i - 1];
             }
         }
-        return newArr;
+        return newProducts;
     }
 
-    //Xây dựng hàm xóa sản phẩm.
-    public static ProductManagement[] deleteProduct(ProductManagement[] arr, int index) {
-        ProductManagement[] newArr = new ProductManagement[arr.length - 1];
-        for (int i = 0; i < newArr.length; i++) {
+    // Hàm xóa sản phẩm
+    public static Product[] deleteNewProduct(Product[] products, int index) {
+        Product[] newProducts = new Product[products.length - 1];
+        for (int i = 0; i < newProducts.length; i++) {
             if (i < index) {
-                newArr[i] = arr[i];
+                newProducts[i] = products[i];
             } else {
-                newArr[i] = arr[i + 1];
+                newProducts[i] = products[i + 1];
             }
         }
-        return newArr;
+        return newProducts;
     }
 
-    // Xây dựng hàm tìm kiếm sản phẩm theo tên.
-    public static int positionOfProduct(ProductManagement[] arr, String name) {
+    // Hàm tìm sản phẩm theo tên
+    public static int findElement(Product[] products, String name) {
         int index = -1;
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i].getName().equals(name)) {
+        for (int i = 0; i < products.length; i++) {
+            if (products[i].getName().equals(name)) {
                 index = i;
             }
         }
         return index;
     }
+    // Hàm sắp xếp sản phẩm theo tên
 
-    //Hàm cập nhất giá sản phẩm
-    public static ProductManagement[] changePrice(ProductManagement[] arr, int index, int newPrice) {
-        arr[index].setPrice(newPrice);
-
-        return arr;
+    public static void sortElement(Product[] products) {
+        for (int i = 0; i < products.length; i++) {
+            for (int j = 0; j < products.length; j++) {
+                if (products[i].getName().compareTo(products[j].getName()) < 0) {
+                    Product temp = products[i];
+                    products[i] = products[j];
+                    products[j] = temp;
+                }
+            }
+        }
     }
-//    // Xây dựng hàm sắp xếp tên sản phẩm từ A-Z
-//    public static ProductManagement[] sortProduct(ProductManagement[] arr) {
-//       Arrays.sort(arr);
-//        return arr;
-//    }
 }
 
 

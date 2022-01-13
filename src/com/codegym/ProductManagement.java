@@ -1,23 +1,20 @@
 package com.codegym;
 
-import java.util.Comparator;
-import java.util.List;
-
-public class ProductManagement implements Comparable<ProductManagement> {
+class Product {
     private int id;
     private String name;
-    private int price;
-    private String description;
+    private double price;
+    private String discription;
 
-    public ProductManagement() {
+    public Product() {
 
     }
 
-    public ProductManagement(int id, String name, int price, String description) {
+    public Product(int id, String name, double price, String discription) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.description = description;
+        this.discription = discription;
     }
 
     public int getId() {
@@ -36,36 +33,23 @@ public class ProductManagement implements Comparable<ProductManagement> {
         this.name = name;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDiscription() {
+        return discription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDiscription(String discription) {
+        this.discription = discription;
     }
 
-    //Hàm hiển thị thông tin sản phẩm
-    public String display() {
-        return this.id + ", " + this.name.toString() + ", giá: " + this.price + ", " + this.description;
-    }
-
-    // Hàm sắp xếp tên sản phẩm từ A-Z
-//    public static Comparator<ProductManagement> sortName = new Comparator<ProductManagement>() {
-//        public int compare(ProductManagement product1, ProductManagement product2) {
-//            String productName1 = product1.getName();
-//            String productName2 = product2.getName();
-//            return productName1.compareTo(productName2);
-//        }
-//    };
-    public int compareTo(ProductManagement product) {
-        return this.getName().compareTo(product.getName());
+    public String toString() {
+        return "ID: " + this.id + ", " + this.name + ", giá: " + this.price +"(VND)"+ ", " + this.discription;
     }
 }
